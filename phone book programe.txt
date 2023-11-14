@@ -1,0 +1,85 @@
+class Node:
+    def __init__(self, name, phone_number):
+        self.name = name
+        self.phone_number = phone_number
+        self.next = None
+
+class PhoneBook:
+    def __init__(self):
+        self.head = None
+
+    def add_contact(self, name, phone_number):
+        new_contact = Node(name, phone_number)
+        new_contact.next = self.head
+        self.head = new_contact
+        print(f"Contact {name} added successfully.")
+
+    def delete_contact(self, name):
+        current = self.head
+        previous = None
+
+        while current is not None and current.name != name:
+            previous = current
+            current = current.next
+
+        if current is not None:
+            if previous is None:
+                self.head = current.next
+            else:
+                previous.next = current.next
+            print(f"Contact {name} deleted successfully.")
+        else:
+            print(f"Contact {name} not found.")
+
+    def search_contact(self, name):
+        current = self.head
+
+        while current is not None and current.name != name:
+            current = current.next
+
+        if current is not None:
+            print(f"Name: {current.name}\nPhone Number: {current.phone_number}")
+        else:
+            print(f"Contact {name} not found.")
+
+    def display_contacts(self):
+        current = self.head
+        print("Contacts in the phone book:")
+        while current is not None:
+            print(f"Name: {current.name}\nPhone Number: {current.phone_number}\n")
+            current = current.next
+
+
+def main():
+    phone_book = PhoneBook()
+
+    while True:
+        print("\nPhone Book Menu:")
+        print("1. Add Contact")
+        print("2. Delete Contact")
+        print("3. Search Contact")
+        print("4. Display Contacts")
+        print("5. Quit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            name = input("Enter contact name: ")
+            phone_number = input("Enter phone number: ")
+            phone_book.add_contact(name, phone_number)
+        elif choice == "2":
+            name = input("Enter contact name to delete: ")
+            phone_book.delete_contact(name)
+        elif choice == "3":
+            name = input("Enter contact name to search: ")
+            phone_book.search_contact(name)
+        elif choice == "4":
+            phone_book.display_contacts()
+        elif choice == "5":
+            print("Exiting Phone Book. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
+if __name__ == "__main__":
+    main()
